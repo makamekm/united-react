@@ -26,6 +26,10 @@ const IndexLayout: React.FC = ({ children, ...props }) => {
           min-width: 100vw;
           overflow: hidden;
         }
+
+        body, #___gatsby, #gatsby-focus-wrapper {
+          min-height: calc(var(--vh) * 100);
+        }
       `}</style>
     </>
   );
