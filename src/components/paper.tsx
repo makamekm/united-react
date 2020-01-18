@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import paper from 'paper';
 import { useSpring, animated, useTransition, UseTransitionResult } from 'react-spring';
+import html2canvas from 'html2canvas';
 
 function initPaper(canvas: HTMLCanvasElement) {
   canvas.setAttribute("resize", "true");
@@ -12,34 +13,23 @@ function initPaper(canvas: HTMLCanvasElement) {
   const start = new paper.Point(100, 100);
   path.moveTo(start);
   path.lineTo(start.add(new paper.Point([200, -50])));
-
-  setInterval(() => {
-    // path.rotate(1);
-
-    // if (bounds.x < 0) paper.view.center = paper.view.center.subtract(new paper.Point(bounds.x, 0));
-    // if (bounds.y < 0) paper.view.center = paper.view.center.subtract(new paper.Point(0, bounds.y));
-
-    // const w = bounds.x + bounds.width;
-    // const h = bounds.y + bounds.height;
-
-    // if (w > paper.view.viewSize.width) {
-    //   paper.view.center = paper.view.center.subtract(new paper.Point(w - paper.view.viewSize.width, 0));
-    // }
-    // if (h > paper.view.viewSize.height) {
-    //   paper.view.center = paper.view.center.subtract(new paper.Point(0, h - paper.view.viewSize.height));
-    // }
-
-  }, 2000);
+  path.selected = true;
 }
 
 export const useTimerTransition = (delay: number = 1000, defaultValue?: boolean): [boolean, Function] => {
   const [isOpen, toggle] = React.useState(!!defaultValue);
   let timeout: NodeJS.Timeout;
-  const setTimer = () => {
+  const clearTime = () => {
     if (timeout) {
       clearTimeout(timeout);
       timeout = null;
     }
+  };
+  React.useEffect(() => {
+    clearTime();
+  }, []);
+  const setTimer = () => {
+    clearTime();
     timeout = setTimeout(() => toggle(!!defaultValue), delay);
     toggle(!defaultValue);
   }
@@ -73,9 +63,23 @@ const maxZoom = 32.00;
 const minZoom = 0.01;
 const zoomFactor = 1.04;
 
+const renderElement = (element: HTMLElement) => {
+  html2canvas(element).then((canvas) => {
+    const raster = new paper.Raster(
+      canvas.toDataURL()
+    );
+    raster.selected = true;
+    raster.position = new paper.Point(200, 200);
+    raster.scale(1 / window.devicePixelRatio);
+    // raster.scale(100 / canvas.width);
+  });
+}
+
 export const Paper = memo(() => {
+  const demo = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     initPaper(canvas.current);
+    renderElement(demo.current);
   }, []);
 
   const [zoomValue, setZoomValue] = React.useState('100');
@@ -114,7 +118,7 @@ export const Paper = memo(() => {
   return (
     <>
       <canvas ref={canvas} className="paper" onWheel={onScroll}></canvas>
-      <div></div>
+      <div ref={demo} style={{ width: '100px', height: '200px' }}>test</div>
       {zoomIndicatorState.map(({ item, key, props }) =>
         item && <animated.div className="zoom-indicator" key={key} style={props}>{zoomValue}%</animated.div>
       )}
