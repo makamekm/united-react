@@ -71,6 +71,7 @@ const getZoomValue = () => {
 
 const maxZoom = 32.00;
 const minZoom = 0.01;
+const zoomFactor = 1.04;
 
 export const Paper = memo(() => {
   React.useEffect(() => {
@@ -86,13 +87,12 @@ export const Paper = memo(() => {
     const mousePosition = new paper.Point(native.offsetX, native.offsetY);
     const mouseProjection = paper.view.viewToProject(mousePosition);
     let newZoom: number;
-    const factor = 1.05;
 
     if (delta < 0) {
-      newZoom = paper.view.zoom * factor;
+      newZoom = paper.view.zoom * zoomFactor;
     }
     if (delta > 0) {
-      newZoom = paper.view.zoom / factor;
+      newZoom = paper.view.zoom / zoomFactor;
     }
 
     if (newZoom < minZoom) {
@@ -118,12 +118,13 @@ export const Paper = memo(() => {
       {zoomIndicatorState.map(({ item, key, props }) =>
         item && <animated.div className="zoom-indicator" key={key} style={props}>{zoomValue}%</animated.div>
       )}
-      <style global jsx>{`
+      <style jsx>{`
         canvas.paper {
           width: 100%;
           height: 100%;
         }
-
+      `}</style>
+      <style global jsx>{`
         .zoom-indicator {
           position: absolute;
           bottom: 50px;
