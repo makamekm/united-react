@@ -34,7 +34,7 @@ function initPaper(canvas: HTMLCanvasElement) {
 
 function changeZoom(oldZoom, delta, c, p) {
   let newZoom;
-  const factor = 1.05;
+  const factor = 1.025;
   if (delta < 0) {
     newZoom = oldZoom * factor;
   }
