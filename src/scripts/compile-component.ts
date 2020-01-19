@@ -1,8 +1,8 @@
-const browserify = require('browserify');
-const babelify = require('babelify');
-const fs = require('fs');
-const watchify = require('watchify');
-const envify = require('envify/custom');
+import browserify from 'browserify';
+import babelify from 'babelify';
+import fs from 'fs';
+import watchify from 'watchify';
+import envify from 'envify/custom';
 
 const bundler = browserify({
   entries: ['src/popup/index.tsx'],

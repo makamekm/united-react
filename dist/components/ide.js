@@ -1,19 +1,19 @@
-import React, { memo } from 'react';
-import { Paper } from './paper';
-import { LeftPanel } from './left-panel';
-
-export const IDE = memo(() => {
-  return (
-    <>
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = require("react");
+const paper_1 = require("./paper");
+const left_panel_1 = require("./left-panel");
+exports.IDE = react_1.memo(() => {
+    return (<>
       <div className="ide-layout">
         <div className="ide-layout-mode">
           BBB
         </div>
         <div className="ide-layout-left">
-          <LeftPanel />
+          <left_panel_1.LeftPanel />
         </div>
         <div className="ide-layout-paper">
-          <Paper />
+          <paper_1.Paper />
         </div>
         <div className="ide-layout-right">
           HHH
@@ -51,7 +51,6 @@ export const IDE = memo(() => {
           border-left: 1px solid #ddd;
         }
       `}</style>
-    </>
-  );
+    </>);
 });
-
+//# sourceMappingURL=ide.js.map
