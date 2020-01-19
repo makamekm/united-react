@@ -71,22 +71,28 @@ function renderElement<P = any>(jsxComponent: React.FC<P>, props: P) {
   element.style.width = 100 + "px";
   element.style.height = 200 + "px";
 
-  ReactDOM.render(React.createElement(jsxComponent, props), element, () => {
-    document.body.appendChild(element);
-
-    html2canvas(element).then((canvas) => {
-      const raster = new paper.Raster(
-        canvas.toDataURL()
-      );
-      raster.selected = true;
-      raster.position = new paper.Point(200, 200);
-      raster.scale(1 / window.devicePixelRatio);
-      // raster.scale(100 / canvas.width);
-
-      document.body.removeChild(element);
-      ReactDOM.unmountComponentAtNode(element);
-    });
-  });
+  ReactDOM.render(
+    React.createElement(jsxComponent, props), element, async () => {
+      document.body.appendChild(element);
+      try {
+        const canvas = await html2canvas(element);
+        const raster = new paper.Raster(
+          canvas.toDataURL()
+        );
+        raster.position = paper.view.center;
+        raster.scale(1 / window.devicePixelRatio);
+        // raster.shadowColor = new paper.Color(0, 0, 0, 0.5);
+        // raster.shadowBlur = 8;
+        // raster.shadowOffset = new paper.Point(0, 5);
+        // raster.scale(100 / canvas.width);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(element);
+        ReactDOM.unmountComponentAtNode(element);
+      }
+    }
+  );
 }
 
 export const Paper = memo(() => {
