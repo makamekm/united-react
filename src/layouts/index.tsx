@@ -20,7 +20,7 @@ const IndexLayout: React.FC = ({ children, ...props }) => {
           padding: 0;
           margin: 0;
           font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
-          background-color: #f3f7fa;
+          background-color: rgb(238, 238, 238);
           color: #4a4a4a;
           max-width: 100vw;
           min-width: 100vw;

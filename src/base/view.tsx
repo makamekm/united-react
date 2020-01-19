@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import classNames from 'classnames';
 
-export const View = memo(({
+export const View: React.FC = memo(({
   children,
   className,
   color,
   style
 }: {
-  children: any;
+  children?: any;
   className?: string;
   color?: string;
   style?: React.CSSProperties;

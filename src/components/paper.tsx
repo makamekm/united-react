@@ -1,7 +1,10 @@
 import React, { memo } from 'react';
+import ReactDOM from 'react-dom';
+
 import paper from 'paper';
 import { useSpring, animated, useTransition, UseTransitionResult } from 'react-spring';
 import html2canvas from 'html2canvas';
+import { View } from '../base/view';
 
 function initPaper(canvas: HTMLCanvasElement) {
   canvas.setAttribute("resize", "true");
@@ -63,23 +66,33 @@ const maxZoom = 32.00;
 const minZoom = 0.01;
 const zoomFactor = 1.04;
 
-const renderElement = (element: HTMLElement) => {
-  html2canvas(element).then((canvas) => {
-    const raster = new paper.Raster(
-      canvas.toDataURL()
-    );
-    raster.selected = true;
-    raster.position = new paper.Point(200, 200);
-    raster.scale(1 / window.devicePixelRatio);
-    // raster.scale(100 / canvas.width);
+function renderElement<P = any>(jsxComponent: React.FC<P>, props: P) {
+  const element = document.createElement("div");
+  element.style.width = 100 + "px";
+  element.style.height = 200 + "px";
+
+  ReactDOM.render(React.createElement(jsxComponent, props), element, () => {
+    document.body.appendChild(element);
+
+    html2canvas(element).then((canvas) => {
+      const raster = new paper.Raster(
+        canvas.toDataURL()
+      );
+      raster.selected = true;
+      raster.position = new paper.Point(200, 200);
+      raster.scale(1 / window.devicePixelRatio);
+      // raster.scale(100 / canvas.width);
+
+      document.body.removeChild(element);
+      ReactDOM.unmountComponentAtNode(element);
+    });
   });
 }
 
 export const Paper = memo(() => {
-  const demo = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     initPaper(canvas.current);
-    renderElement(demo.current);
+    renderElement(View, {});
   }, []);
 
   const [zoomValue, setZoomValue] = React.useState('100');
@@ -118,7 +131,6 @@ export const Paper = memo(() => {
   return (
     <>
       <canvas ref={canvas} className="paper" onWheel={onScroll}></canvas>
-      <div ref={demo} style={{ width: '100px', height: '200px' }}>test</div>
       {zoomIndicatorState.map(({ item, key, props }) =>
         item && <animated.div className="zoom-indicator" key={key} style={props}>{zoomValue}%</animated.div>
       )}
