@@ -12,7 +12,13 @@ const IndexLayout: React.FC = ({ children, ...props }) => {
 
   return (
     <>
-      <Helmet title="App Name" meta={[{ name: 'description', content: 'Desctiption' }, { name: 'keywords', content: 'keyword' }]} />
+      <Helmet
+        title="App Name"
+        meta={[
+          { name: 'description', content: 'Desctiption' },
+          { name: 'keywords', content: 'keyword' }
+        ]}
+      />
       {children}
       <Loading active={loading} />
       <style global jsx>{`
@@ -25,9 +31,12 @@ const IndexLayout: React.FC = ({ children, ...props }) => {
           max-width: 100vw;
           min-width: 100vw;
           overflow: hidden;
+          touch-action: none;
         }
 
-        body, #___gatsby, #gatsby-focus-wrapper {
+        body,
+        #___gatsby,
+        #gatsby-focus-wrapper {
           min-height: calc(var(--vh) * 100);
         }
       `}</style>
