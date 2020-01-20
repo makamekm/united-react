@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import classNames from 'classnames';
 
-const Panel = ({
+export default memo(({
   children,
   className,
   color,
@@ -28,6 +28,4 @@ const Panel = ({
       `}</style>
     </div>
   );
-};
-
-export default memo(Panel);
+});

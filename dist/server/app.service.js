@@ -7,9 +7,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
+const compile_component_1 = require("../scripts/compile-component");
 let AppService = class AppService {
     getHello() {
         return 'Hello World!';
+    }
+    test() {
+        return compile_component_1.compileComponent();
     }
 };
 AppService = __decorate([

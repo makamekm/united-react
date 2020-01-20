@@ -5,11 +5,12 @@ import watchify from 'watchify';
 import envify from 'envify/custom';
 
 const bundler = browserify({
-  entries: ['src/popup/index.tsx'],
+  entries: ['src/components/demo.tsx'],
   debug: process.env.NODE_ENV === 'production' ? false : true,
   extensions: ['.ts', '.tsx', '.js', '.jsx'],
   cache: {},
-  packageCache: {}
+  packageCache: {},
+  standalone: 'demo',
 });
 
 bundler.transform(babelify, {
@@ -29,11 +30,20 @@ bundler.transform(babelify, {
 
 if (process.env.NODE_ENV === 'production') {
   bundler.plugin('minifyify', { uglify: true, map: false });
-} else {
-  bundler.plugin(watchify);
   bundler.transform(envify({
-    NODE_ENV: 'development'
-  }))
+    NODE_ENV: 'production'
+  }));
+} else {
+  // bundler.plugin(watchify);
 }
 
-bundler.bundle().pipe(fs.createWriteStream('public/components/demo.js', { flags: 'w' }));
+function streamToString(stream): Promise<string> {
+  const chunks = [];
+  return new Promise((resolve, reject) => {
+    stream.on('data', chunk => chunks.push(chunk))
+    stream.on('error', reject)
+    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
+  });
+}
+
+export const compileComponent = () => streamToString(bundler.bundle());
