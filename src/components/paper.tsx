@@ -7,12 +7,21 @@ import html2canvas from 'html2canvas';
 import { View } from '../base/view';
 
 function initPaper(canvas: HTMLCanvasElement) {
-  canvas.setAttribute("resize", "true");
-  canvas.setAttribute("keepalive", "true");
+  canvas.setAttribute('resize', 'true');
+  canvas.setAttribute('keepalive', 'true');
   paper.setup(canvas);
 
+  setTimeout(() => {
+    const pageWidth = canvas.parentElement.scrollWidth;
+    const pageHeight = canvas.parentElement.scrollHeight;
+    paper.view.viewSize.width = pageWidth;
+    paper.view.viewSize.height = pageHeight;
+    const center = new paper.Point(pageWidth / 2, pageHeight / 2);
+    paper.view.center = center;
+  }, 0);
+
   const path = new paper.Path();
-  path.strokeColor = new paper.Color("black");
+  path.strokeColor = new paper.Color('black');
   const start = new paper.Point(100, 100);
   path.moveTo(start);
   path.lineTo(start.add(new paper.Point([200, -50])));
@@ -35,7 +44,7 @@ export const useTimerTransition = (delay: number = 1000, defaultValue?: boolean)
     clearTime();
     timeout = setTimeout(() => toggle(!!defaultValue), delay);
     toggle(!defaultValue);
-  }
+  };
   return [isOpen, setTimer];
 };
 
@@ -53,46 +62,43 @@ export const useZoomIndicator = (): [any, Function] => {
     leave: {
       opacity: 0,
       transform: 'translate3d(0,80px,0)'
-    },
-  })
+    }
+  });
   return [transitions, showZoomIndicator];
 };
 
 const getZoomValue = () => {
   return (paper.view.zoom * 100).toFixed(0);
-}
+};
 
-const maxZoom = 32.00;
+const maxZoom = 32.0;
 const minZoom = 0.01;
 const zoomFactor = 1.04;
 
 function renderElement<P = any>(jsxComponent: React.FC<P>, props: P) {
-  const element = document.createElement("div");
-  element.style.width = 100 + "px";
-  element.style.height = 200 + "px";
+  const element = document.createElement('div');
+  element.style.width = 100 + 'px';
+  element.style.height = 200 + 'px';
 
-  ReactDOM.render(
-    React.createElement(jsxComponent, props), element, async () => {
-      document.body.appendChild(element);
-      try {
-        const canvas = await html2canvas(element);
-        const raster = new paper.Raster(
-          canvas.toDataURL()
-        );
-        raster.position = paper.view.center;
-        raster.scale(1 / window.devicePixelRatio);
-        // raster.shadowColor = new paper.Color(0, 0, 0, 0.5);
-        // raster.shadowBlur = 8;
-        // raster.shadowOffset = new paper.Point(0, 5);
-        // raster.scale(100 / canvas.width);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        document.body.removeChild(element);
-        ReactDOM.unmountComponentAtNode(element);
-      }
+  ReactDOM.render(React.createElement(jsxComponent, props), element, async () => {
+    document.body.appendChild(element);
+    try {
+      const canvas = await html2canvas(element);
+      const raster = new paper.Raster(canvas.toDataURL());
+      raster.position = paper.view.center;
+      // console.log(canvas.clientWidth, canvas.clientHeight);
+      raster.scale(1 / window.devicePixelRatio);
+      // raster.shadowColor = new paper.Color(0, 0, 0, 0.5);
+      // raster.shadowBlur = 8;
+      // raster.shadowOffset = new paper.Point(0, 5);
+      // raster.scale(100 / canvas.width);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      document.body.removeChild(element);
+      ReactDOM.unmountComponentAtNode(element);
     }
-  );
+  });
 }
 
 export const Paper = memo(() => {
@@ -106,7 +112,7 @@ export const Paper = memo(() => {
   const canvas = React.useRef<HTMLCanvasElement>(null);
   const onScroll = React.useCallback((e: React.WheelEvent<HTMLCanvasElement>) => {
     const native: any = e.nativeEvent;
-    const delta = Math.max(-1, Math.min(1, (native.wheelDelta || -native.detail)));
+    const delta = Math.max(-1, Math.min(1, native.wheelDelta || -native.detail));
     const mousePosition = new paper.Point(native.offsetX, native.offsetY);
     const mouseProjection = paper.view.viewToProject(mousePosition);
     let newZoom: number;
@@ -137,13 +143,19 @@ export const Paper = memo(() => {
   return (
     <>
       <canvas ref={canvas} className="paper" onWheel={onScroll}></canvas>
-      {zoomIndicatorState.map(({ item, key, props }) =>
-        item && <animated.div className="zoom-indicator" key={key} style={props}>{zoomValue}%</animated.div>
+      {zoomIndicatorState.map(
+        ({ item, key, props }) =>
+          item && (
+            <animated.div className="zoom-indicator" key={key} style={props}>
+              {zoomValue}%
+            </animated.div>
+          )
       )}
       <style jsx>{`
         canvas.paper {
           width: 100%;
           height: 100%;
+          min-height: calc(var(--vh) * 100);
         }
       `}</style>
       <style global jsx>{`
@@ -162,4 +174,3 @@ export const Paper = memo(() => {
     </>
   );
 });
-
