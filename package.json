@@ -48,9 +48,6 @@
     ]
   },
   "dependencies": {
-    "@nestjs/common": "^6.10.14",
-    "@nestjs/core": "^6.10.14",
-    "@nestjs/platform-express": "^6.10.14",
     "@babel/core": "^7.8.3",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
@@ -58,6 +55,9 @@
     "@babel/plugin-transform-typescript": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
+    "@nestjs/common": "^6.10.14",
+    "@nestjs/core": "^6.10.14",
+    "@nestjs/platform-express": "^6.10.14",
     "babel-preset-gatsby": "^0.2.27",
     "babelify": "^10.0.0",
     "browserify": "^16.5.0",
@@ -81,11 +81,12 @@
     "react-ioc": "^1.0.0",
     "react-spring": "^8.0.27",
     "react-test-renderer": "^16.12.0",
+    "reflect-metadata": "0.1.13",
+    "rxjs": "^6.5.4",
+    "scriptjs": "^2.5.9",
     "styled-jsx": "^3.2.4",
     "typescript": "^3.7.5",
-    "watchify": "^3.11.1",
-    "reflect-metadata": "0.1.13",
-    "rxjs": "^6.5.4"
+    "watchify": "^3.11.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.14.0",

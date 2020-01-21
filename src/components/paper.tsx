@@ -5,6 +5,9 @@ import paper from 'paper';
 import { useSpring, animated, useTransition, UseTransitionResult } from 'react-spring';
 import html2canvas from 'html2canvas';
 import { View } from '../base/view';
+import { UmdComponent } from './umd-component';
+import { provider } from 'react-ioc';
+import { UserService } from '../services/user.service';
 
 function initPaper(canvas: HTMLCanvasElement) {
   canvas.setAttribute('resize', 'true');
@@ -75,36 +78,108 @@ const maxZoom = 32.0;
 const minZoom = 0.01;
 const zoomFactor = 1.04;
 
-function renderElement<P = any>(jsxComponent: React.FC<P>, props: P) {
+const rootContainer = services =>
+  provider(...services)(({ children }: { children: any }) => {
+    return <div>{children}</div>;
+  });
+
+async function renderElement(props: React.Props<any> = {}) {
   const element = document.createElement('div');
+
+  // Configuration
   element.style.width = 100 + 'px';
   element.style.height = 200 + 'px';
+  const Component = await UmdComponent('/api/test', 'demo');
+  const RootContainer = rootContainer([UserService]);
+  const { ...finalProps } = props;
 
-  ReactDOM.render(React.createElement(jsxComponent, props), element, async () => {
-    document.body.appendChild(element);
-    try {
-      const canvas = await html2canvas(element);
-      const raster = new paper.Raster(canvas.toDataURL());
-      raster.position = paper.view.center;
-      // console.log(canvas.clientWidth, canvas.clientHeight);
-      raster.scale(1 / window.devicePixelRatio);
-      // raster.shadowColor = new paper.Color(0, 0, 0, 0.5);
-      // raster.shadowBlur = 8;
-      // raster.shadowOffset = new paper.Point(0, 5);
-      // raster.scale(100 / canvas.width);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      document.body.removeChild(element);
-      ReactDOM.unmountComponentAtNode(element);
+  ReactDOM.render(
+    <RootContainer>
+      <Component {...finalProps} />
+    </RootContainer>,
+    element,
+    async () => {
+      document.body.appendChild(element);
+      try {
+        const canvas = await html2canvas(element);
+        const raster = new paper.Raster(canvas.toDataURL());
+        raster.position = paper.view.center;
+        // console.log(canvas.clientWidth, canvas.clientHeight);
+        raster.scale(1 / window.devicePixelRatio);
+        // raster.shadowColor = new paper.Color(0, 0, 0, 0.5);
+        // raster.shadowBlur = 8;
+        // raster.shadowOffset = new paper.Point(0, 5);
+        // raster.scale(100 / canvas.width);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(element);
+        ReactDOM.unmountComponentAtNode(element);
+      }
     }
-  });
+  );
 }
+
+let renderComponent: () => Promise<void>;
+
+type HotPromise<T> = [Promise<T>, (element: T) => void, (e: any) => void];
+
+function createHotPromise<T = void>(): HotPromise<T> {
+  let resolve;
+  let reject;
+  const promise = new Promise<T>((r, e) => {
+    resolve = r;
+    reject = e;
+  });
+  return [promise, resolve, reject];
+}
+
+export const ComponentRenderer: React.FC = () => {
+  const ref = React.useRef();
+  const [data, setData] = React.useState();
+  const [promise, setPromise] = React.useState<HotPromise<HTMLElement>>(createHotPromise());
+  React.useEffect(() => {
+    renderComponent = async () => {
+      setData({
+        component: await UmdComponent('/api/test', 'demo'),
+        props: {}
+      });
+      const element = await promise[0];
+      try {
+        const canvas = await html2canvas(element);
+        const raster = new paper.Raster(canvas.toDataURL());
+        raster.position = paper.view.center;
+        raster.scale(1 / window.devicePixelRatio);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setData(null);
+      }
+    };
+  }, [promise]);
+  React.useEffect(() => {
+    if (data && ref.current) {
+      console.log(ref.current);
+      promise[1](ref.current);
+      setPromise(createHotPromise());
+    }
+  }, [data, ref]);
+  return (
+    <>
+      {data ? (
+        <div ref={ref} style={{ width: '200px', height: '200px' }}>
+          <data.component {...data.props}></data.component>
+        </div>
+      ) : null}
+    </>
+  );
+};
 
 export const Paper = memo(() => {
   React.useEffect(() => {
     initPaper(canvas.current);
-    renderElement(View, {});
+    renderElement();
+    // renderComponent();
   }, []);
 
   const [zoomValue, setZoomValue] = React.useState('100');
@@ -151,6 +226,7 @@ export const Paper = memo(() => {
             </animated.div>
           )
       )}
+      <ComponentRenderer />
       <style jsx>{`
         canvas.paper {
           width: 100%;
