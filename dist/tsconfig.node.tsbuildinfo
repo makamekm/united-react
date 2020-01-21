@@ -1245,8 +1245,48 @@
         "version": "6400917b161d3331bc82638ccc4aa149d755f501cfaba3d716fca1228c956171",
         "signature": "6400917b161d3331bc82638ccc4aa149d755f501cfaba3d716fca1228c956171"
       },
+      "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts": {
+        "version": "86b9f7acaba268dfb257d127462361ebe8279e8f97459e6bc473abc04067b2cf",
+        "signature": "86b9f7acaba268dfb257d127462361ebe8279e8f97459e6bc473abc04067b2cf"
+      },
+      "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts": {
+        "version": "7af6e3f6cfa54c0cafdb8b295a8a8ecea08875b5e89ee672f37810bb0369b9a3",
+        "signature": "7af6e3f6cfa54c0cafdb8b295a8a8ecea08875b5e89ee672f37810bb0369b9a3"
+      },
+      "../node_modules/@nestjs/serve-static/dist/loaders/express.loader.d.ts": {
+        "version": "eabc62b6d7e0b43b7bfd8f8914c40d980a20cc52e3d66d0c40edffc3a43f21e7",
+        "signature": "eabc62b6d7e0b43b7bfd8f8914c40d980a20cc52e3d66d0c40edffc3a43f21e7"
+      },
+      "../node_modules/@nestjs/serve-static/dist/loaders/fastify.loader.d.ts": {
+        "version": "3e98c6c6886df305dc389ff4d8a53515bb2306c2004469947864b1d8efb9f43e",
+        "signature": "3e98c6c6886df305dc389ff4d8a53515bb2306c2004469947864b1d8efb9f43e"
+      },
+      "../node_modules/@nestjs/serve-static/dist/loaders/noop.loader.d.ts": {
+        "version": "8e08a9cab9e3d32aecdbde4a7cb8da977f027fd03d6cf774be15ed274acd543c",
+        "signature": "8e08a9cab9e3d32aecdbde4a7cb8da977f027fd03d6cf774be15ed274acd543c"
+      },
+      "../node_modules/@nestjs/serve-static/dist/serve-static.constants.d.ts": {
+        "version": "cb2be8b992dfcf087656b9ba8f887e7943cd3a7f9880d0292064d32702a9146d",
+        "signature": "cb2be8b992dfcf087656b9ba8f887e7943cd3a7f9880d0292064d32702a9146d"
+      },
+      "../node_modules/@nestjs/serve-static/dist/serve-static.module.d.ts": {
+        "version": "d3d63560d211f5cde23ddacd7b628963d1a4701d195c53705a53821dd0fbe1b1",
+        "signature": "d3d63560d211f5cde23ddacd7b628963d1a4701d195c53705a53821dd0fbe1b1"
+      },
+      "../node_modules/@nestjs/serve-static/dist/serve-static.providers.d.ts": {
+        "version": "e5d2f32f61581a9e54404f1918c9a9f6911f89a6efd535bf3c4d41f3f84d8802",
+        "signature": "e5d2f32f61581a9e54404f1918c9a9f6911f89a6efd535bf3c4d41f3f84d8802"
+      },
+      "../node_modules/@nestjs/serve-static/dist/index.d.ts": {
+        "version": "fea13cbc4da2a22aad4d71b15c73854a6a801fa8038293eb7f4783884ff5af70",
+        "signature": "fea13cbc4da2a22aad4d71b15c73854a6a801fa8038293eb7f4783884ff5af70"
+      },
+      "../node_modules/@nestjs/serve-static/index.d.ts": {
+        "version": "a2b176f66f0b708241265fb3b417597c9c9d21912bbb7f5cc00d99af551c2078",
+        "signature": "a2b176f66f0b708241265fb3b417597c9c9d21912bbb7f5cc00d99af551c2078"
+      },
       "../src/scripts/compile-component.ts": {
-        "version": "85e29e7ae2e734b32e4556f64265814bfaed61d268e90bd89f605454f59bfa17",
+        "version": "bc64b427c1e0863d0c4b93ba86467f879cce1a8b1eb00f820ec24f68266f729c",
         "signature": "436433460ea3fb7149d13c1a97b8e4f3a78c40c00d9f0bf1c7c59fb42d9f7634"
       },
       "../src/server/app.service.ts": {
@@ -1258,7 +1298,7 @@
         "signature": "a70b0e1b81ed9264497f6b32acc1c3e8839bde6f90362e0e835717e8a27e4a9f"
       },
       "../src/server/app.module.ts": {
-        "version": "30c9042e9cea4e04c1d26675379dced11cc60bd744e650a5652737adca396e5e",
+        "version": "543ca079b9194b945542bb838b19f29b09ad00c729811b4a303af8955d144e25",
         "signature": "b82491e2990291580288c5602d4c017238977749d52b17391f0e45d9a29be644"
       },
       "../src/main.ts": {
@@ -3991,6 +4031,91 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/express.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/fastify.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/noop.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/serve-static.constants.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/serve-static.module.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/serve-static.providers.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/index.d.ts": [
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/express.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/fastify.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/noop.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/serve-static.constants.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/serve-static.module.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/serve-static.providers.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/index.d.ts": [
+        "../node_modules/@nestjs/serve-static/dist/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../src/scripts/compile-component.ts": [
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
@@ -4015,6 +4140,8 @@
       ],
       "../src/server/app.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/serve-static/index.d.ts",
+        "../node_modules/@types/node/path.d.ts",
         "../src/server/app.controller.ts",
         "../src/server/app.service.ts",
         "../node_modules/@types/node/fs.d.ts",
@@ -6904,6 +7031,91 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/express.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/fastify.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/loaders/noop.loader.d.ts": [
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/serve-static.constants.d.ts": [
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/serve-static.module.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/core/index.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/serve-static.providers.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/dist/index.d.ts": [
+        "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/express.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/fastify.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/loaders/noop.loader.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/serve-static.constants.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/serve-static.module.d.ts",
+        "../node_modules/@nestjs/serve-static/dist/serve-static.providers.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nestjs/serve-static/index.d.ts": [
+        "../node_modules/@nestjs/serve-static/dist/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../src/server/app.controller.ts": [
         "../src/server/app.service.ts"
       ],
@@ -7602,7 +7814,16 @@
       "../node_modules/@nestjs/core/services/reflector.service.d.ts",
       "../node_modules/@nestjs/core/services/index.d.ts",
       "../node_modules/@nestjs/core/index.d.ts",
-      "../src/scripts/compile-component.ts",
+      "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/loaders/abstract.loader.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/loaders/express.loader.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/loaders/fastify.loader.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/loaders/noop.loader.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/serve-static.constants.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/serve-static.module.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/serve-static.providers.d.ts",
+      "../node_modules/@nestjs/serve-static/dist/index.d.ts",
+      "../node_modules/@nestjs/serve-static/index.d.ts",
       "../src/server/app.service.ts",
       "../src/server/app.controller.ts",
       "../src/server/app.module.ts",
@@ -7661,7 +7882,8 @@
       "../node_modules/@types/webpack-sources/index.d.ts",
       "../node_modules/@types/webpack/index.d.ts",
       "../node_modules/@types/yargs-parser/index.d.ts",
-      "../node_modules/@types/yargs/index.d.ts"
+      "../node_modules/@types/yargs/index.d.ts",
+      "../src/scripts/compile-component.ts"
     ]
   },
   "version": "3.7.5"

@@ -7,13 +7,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
+const serve_static_1 = require("@nestjs/serve-static");
+const path_1 = require("path");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
-        imports: [],
+        imports: [
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: path_1.join('./public'),
+            }),
+        ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

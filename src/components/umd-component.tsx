@@ -5,7 +5,9 @@ export const UmdComponent = async (url: string, name: string): Promise<React.FC>
   return new Promise<React.FC>((r, e) =>
     script(url, () => {
       const target = window[name];
-      target.replaceReact(React);
+      // window.React = React;
+      // target.replaceReact(React);
+      console.log(target);
       if (target) {
         r(target.default);
       } else {

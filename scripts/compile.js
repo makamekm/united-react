@@ -1,11 +1,11 @@
-import browserify from 'browserify';
-import babelify from 'babelify';
-import fs from 'fs';
-import watchify from 'watchify';
-import envify from 'envify/custom';
+const browserify = require('browserify');
+const babelify = require('babelify');
+const fs = require('fs');
+const watchify = require('watchify');
+const envify = require('envify/custom');
 
 const bundler = browserify({
-  entries: ['src/components/demo.tsx'],
+  entries: ['src/index.tsx'],
   debug: process.env.NODE_ENV === 'production' ? false : true,
   extensions: ['.ts', '.tsx', '.js', '.jsx'],
   cache: {},
@@ -28,7 +28,7 @@ bundler.transform(babelify, {
   ]
 });
 
-bundler.external('react');
+// bundler.external('react');
 
 if (process.env.NODE_ENV === 'production') {
   bundler.plugin('minifyify', { uglify: true, map: false });
@@ -39,13 +39,4 @@ if (process.env.NODE_ENV === 'production') {
   // bundler.plugin(watchify);
 }
 
-function streamToString(stream): Promise<string> {
-  const chunks = [];
-  return new Promise((resolve, reject) => {
-    stream.on('data', chunk => chunks.push(chunk))
-    stream.on('error', reject)
-    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
-  });
-}
-
-export const compileComponent = () => streamToString(bundler.bundle());
+bundler.bundle().pipe(fs.createWriteStream('public/index.js', { flags: 'w' }));

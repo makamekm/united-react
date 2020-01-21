@@ -28,6 +28,7 @@ bundler.transform(babelify_1.default, {
         ]
     ]
 });
+bundler.external('react');
 if (process.env.NODE_ENV === 'production') {
     bundler.plugin('minifyify', { uglify: true, map: false });
     bundler.transform(custom_1.default({
