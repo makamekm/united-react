@@ -8,6 +8,7 @@ import { View } from '../base/view';
 import { UmdComponent } from './umd-component';
 import { provider } from 'react-ioc';
 import { UserService } from '../services/user.service';
+import { UmdServices } from './umd-services';
 
 function initPaper(canvas: HTMLCanvasElement) {
   canvas.setAttribute('resize', 'true');
@@ -89,8 +90,9 @@ async function renderElement(props: React.Props<any> = {}) {
   // Configuration
   element.style.width = 100 + 'px';
   element.style.height = 200 + 'px';
+  const services = await UmdServices('/api/compile/services');
   const Component = await UmdComponent('/api/compile/component?path=demo', 'demo');
-  const RootContainer = rootContainer([UserService]);
+  const RootContainer = rootContainer(services);
   const { ...finalProps } = props;
 
   ReactDOM.render(

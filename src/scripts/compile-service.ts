@@ -14,15 +14,31 @@ function streamToString(stream): Promise<string> {
   });
 }
 
-export const compileService = async (servicePath: string) => {
+export const getServiceList = async (): Promise<string[]> => {
+  return await new Promise<string[]>((r, e) => glob(path.resolve('./demo/services') + '/**/*', {
+    nodir: true,
+  }, (er, files) => {
+    if (!er) {
+      r(files);
+    } else {
+      e(er);
+    }
+  }));
+}
+
+export const compileServices = async () => {
+  const paths = await getServiceList();
+  console.log(paths);
+
   const bundler = browserify({
-    entries: [`./demo/services/${servicePath}.tsx`],
+    files: paths,
+    entries: paths,
     debug: process.env.NODE_ENV === 'production' ? false : true,
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     cache: {},
     packageCache: {},
     fullPaths: true,
-    standalone: servicePath
+    require: paths,
   });
 
   bundler.transform(babelify, {
@@ -41,14 +57,6 @@ export const compileService = async (servicePath: string) => {
   });
 
   bundler.external(standardLibraries);
-  const paths = await new Promise((r, e) => glob(path.resolve('./demo/services') + '/**/*', {}, (er, files) => {
-    if (!er) {
-      r(files);
-    } else {
-      e(er);
-    }
-  }));
-  bundler.external(paths);
 
   return streamToString(bundler.bundle());
 };

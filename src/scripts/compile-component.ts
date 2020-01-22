@@ -4,6 +4,7 @@ import path from 'path';
 import glob from 'glob';
 
 import { standardLibraries } from '../../scripts/standard-libraries';
+import { getServiceList } from './compile-service';
 
 function streamToString(stream): Promise<string> {
   const chunks = [];
@@ -12,6 +13,18 @@ function streamToString(stream): Promise<string> {
     stream.on('error', reject);
     stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
   });
+}
+
+export const getComponentList = async () => {
+  return await new Promise((r, e) => glob(path.resolve('./demo/components') + '/**/*', {
+    nodir: true,
+  }, (er, files) => {
+    if (!er) {
+      r(files);
+    } else {
+      e(er);
+    }
+  }));
 }
 
 export const compileComponent = async (componentPath: string) => {
@@ -41,13 +54,7 @@ export const compileComponent = async (componentPath: string) => {
   });
 
   bundler.external(standardLibraries);
-  const paths = await new Promise((r, e) => glob(path.resolve('./demo/services') + '/**/*', {}, (er, files) => {
-    if (!er) {
-      r(files);
-    } else {
-      e(er);
-    }
-  }));
+  const paths = await getServiceList();
   bundler.external(paths);
 
   return streamToString(bundler.bundle());

@@ -13,7 +13,12 @@ export class AppController {
   }
 
   @Get('component')
-  async component(@Query('path') path): Promise<string> {
-    return await this.appService.getCompiledComponent(path);
+  component(@Query('path') path) {
+    return this.appService.getCompiledComponent(path);
+  }
+
+  @Get('services')
+  service() {
+    return this.appService.getCompiledServices();
   }
 }

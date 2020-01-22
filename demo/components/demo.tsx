@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import classNames from 'classnames';
 import { useInstance } from 'react-ioc';
-import { DemoUserService } from '../services/user.service';
+import { DemoUserService } from '../services/demo-user.service';
 
 // export const replaceReact = R => Object.assign(React, R);
 
