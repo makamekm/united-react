@@ -1,3 +1,3 @@
 module.exports = {
-  standardLibraries: ['react', 'react-dom']
+  standardLibraries: ['react', 'react-dom', 'react-ioc', 'mobx', 'mobx-react', 'mobx-react-lite']
 };
