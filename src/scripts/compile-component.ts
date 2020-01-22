@@ -10,6 +10,7 @@ const bundler = browserify({
   extensions: ['.ts', '.tsx', '.js', '.jsx'],
   cache: {},
   packageCache: {},
+  fullPaths: true,
   standalone: 'demo',
 });
 
