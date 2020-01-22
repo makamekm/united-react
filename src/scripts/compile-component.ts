@@ -28,7 +28,8 @@ bundler.transform(babelify, {
   ]
 });
 
-bundler.external('react');
+// bundler.external('react');
+bundler.exclude('react');
 
 if (process.env.NODE_ENV === 'production') {
   bundler.plugin('minifyify', { uglify: true, map: false });
