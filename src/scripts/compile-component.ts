@@ -1,48 +1,7 @@
 import browserify from 'browserify';
 import babelify from 'babelify';
-import fs from 'fs';
-import watchify from 'watchify';
-import envify from 'envify/custom';
 
 import { standardLibraries } from '../../scripts/standard-libraries';
-
-const bundler = browserify({
-  entries: ['src/components/demo.tsx'],
-  debug: process.env.NODE_ENV === 'production' ? false : true,
-  extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  cache: {},
-  packageCache: {},
-  fullPaths: true,
-  standalone: 'demo'
-});
-
-bundler.transform(babelify, {
-  extensions: ['.ts', '.tsx', '.js', '.jsx'],
-  presets: ['@babel/env', '@babel/react', '@babel/typescript'],
-  plugins: [
-    'styled-jsx/babel',
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-    [
-      '@babel/plugin-proposal-decorators',
-      {
-        legacy: true
-      }
-    ]
-  ]
-});
-
-bundler.external(standardLibraries);
-
-if (process.env.NODE_ENV === 'production') {
-  bundler.plugin('minifyify', { uglify: true, map: false });
-  bundler.transform(
-    envify({
-      NODE_ENV: 'production'
-    })
-  );
-} else {
-  // bundler.plugin(watchify);
-}
 
 function streamToString(stream): Promise<string> {
   const chunks = [];
@@ -53,4 +12,33 @@ function streamToString(stream): Promise<string> {
   });
 }
 
-export const compileComponent = () => streamToString(bundler.bundle());
+export const compileComponent = (path: string = 'demo') => {
+  const bundler = browserify({
+    entries: [`./demo/components/${path}.tsx`],
+    debug: process.env.NODE_ENV === 'production' ? false : true,
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    cache: {},
+    packageCache: {},
+    fullPaths: true,
+    standalone: path
+  });
+
+  bundler.transform(babelify, {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    presets: ['@babel/env', '@babel/react', '@babel/typescript'],
+    plugins: [
+      'styled-jsx/babel',
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      [
+        '@babel/plugin-proposal-decorators',
+        {
+          legacy: true
+        }
+      ]
+    ]
+  });
+
+  bundler.external(standardLibraries);
+
+  return streamToString(bundler.bundle());
+};

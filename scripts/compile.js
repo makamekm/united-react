@@ -36,12 +36,15 @@ bundler.transform(babelify, {
 const bundle = () => bundler.bundle().pipe(fs.createWriteStream('public/index.js', { flags: 'w' }));
 
 if (process.env.NODE_ENV === 'production') {
-  bundler.plugin('minifyify', { uglify: true, map: false });
   bundler.transform(
+    {
+      global: true
+    },
     envify({
       NODE_ENV: 'production'
     })
   );
+  bundler.plugin('minifyify', { uglify: true, map: false });
 } else {
   bundler.plugin(watchify);
   bundler.on('update', bundle);

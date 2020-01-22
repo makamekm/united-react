@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import ReactDOM from 'react-dom';
 
 import paper from 'paper';
-import { useSpring, animated, useTransition, UseTransitionResult } from 'react-spring';
+import { animated, useTransition } from 'react-spring';
 import html2canvas from 'html2canvas';
 import { View } from '../base/view';
 import { UmdComponent } from './umd-component';
