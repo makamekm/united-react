@@ -4,6 +4,8 @@ import fs from 'fs';
 import watchify from 'watchify';
 import envify from 'envify/custom';
 
+import { standardLibraries } from '../../scripts/standard-libraries';
+
 const bundler = browserify({
   entries: ['src/components/demo.tsx'],
   debug: process.env.NODE_ENV === 'production' ? false : true,
@@ -11,7 +13,7 @@ const bundler = browserify({
   cache: {},
   packageCache: {},
   fullPaths: true,
-  standalone: 'demo',
+  standalone: 'demo'
 });
 
 bundler.transform(babelify, {
@@ -29,14 +31,15 @@ bundler.transform(babelify, {
   ]
 });
 
-// bundler.external('react');
-bundler.exclude('react');
+bundler.external(standardLibraries);
 
 if (process.env.NODE_ENV === 'production') {
   bundler.plugin('minifyify', { uglify: true, map: false });
-  bundler.transform(envify({
-    NODE_ENV: 'production'
-  }));
+  bundler.transform(
+    envify({
+      NODE_ENV: 'production'
+    })
+  );
 } else {
   // bundler.plugin(watchify);
 }
@@ -44,9 +47,9 @@ if (process.env.NODE_ENV === 'production') {
 function streamToString(stream): Promise<string> {
   const chunks = [];
   return new Promise((resolve, reject) => {
-    stream.on('data', chunk => chunks.push(chunk))
-    stream.on('error', reject)
-    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')))
+    stream.on('data', chunk => chunks.push(chunk));
+    stream.on('error', reject);
+    stream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
   });
 }
 

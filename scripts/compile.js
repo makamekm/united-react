@@ -4,6 +4,7 @@ const fs = require('fs');
 const watchify = require('watchify');
 const envify = require('envify/custom');
 const path = require('path');
+const { standardLibraries } = require('./standard-libraries');
 
 const bundler = browserify({
   entries: ['src/index.tsx'],
@@ -12,7 +13,7 @@ const bundler = browserify({
   cache: {},
   packageCache: {},
   fullPaths: true,
-  // standalone: 'main',
+  require: standardLibraries
 });
 
 bundler.transform(babelify, {
@@ -36,9 +37,11 @@ const bundle = () => bundler.bundle().pipe(fs.createWriteStream('public/index.js
 
 if (process.env.NODE_ENV === 'production') {
   bundler.plugin('minifyify', { uglify: true, map: false });
-  bundler.transform(envify({
-    NODE_ENV: 'production'
-  }));
+  bundler.transform(
+    envify({
+      NODE_ENV: 'production'
+    })
+  );
 } else {
   bundler.plugin(watchify);
   bundler.on('update', bundle);
@@ -46,10 +49,9 @@ if (process.env.NODE_ENV === 'production') {
 
 bundle();
 
-copyFolderRecursiveSync('./static', './public')
+copyFolderRecursiveSync('./static', './public');
 
 function copyFileSync(source, target) {
-
   var targetFile = target;
 
   // if target is a directory a new file with the same name will be created
@@ -73,7 +75,7 @@ function copyFolderRecursiveSync(source, target) {
   //copy
   if (fs.lstatSync(source).isDirectory()) {
     files = fs.readdirSync(source);
-    files.forEach(function (file) {
+    files.forEach(function(file) {
       var curSource = path.join(source, file);
       if (fs.lstatSync(curSource).isDirectory()) {
         copyFolderRecursiveSync(curSource, path.join(target, file));
