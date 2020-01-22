@@ -89,7 +89,7 @@ async function renderElement(props: React.Props<any> = {}) {
   // Configuration
   element.style.width = 100 + 'px';
   element.style.height = 200 + 'px';
-  const Component = await UmdComponent('/test', 'demo');
+  const Component = await UmdComponent('/api/compile/component?path=demo', 'demo');
   const RootContainer = rootContainer([UserService]);
   const { ...finalProps } = props;
 

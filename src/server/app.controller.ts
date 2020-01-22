@@ -1,19 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('api/compile')
 export class AppController {
   constructor(
     private readonly appService: AppService,
   ) { }
 
   @Get('ping')
-  getHello(): string {
-    return this.appService.getHello();
+  ping(): string {
+    return 'pong';
   }
 
-  @Get('test')
-  async test(): Promise<string> {
-    return await this.appService.test();
+  @Get('component')
+  async component(@Query('path') path): Promise<string> {
+    return await this.appService.getCompiledComponent(path);
   }
 }

@@ -1,15 +1,15 @@
 import React, { memo } from 'react';
 import classNames from 'classnames';
 import { useInstance } from 'react-ioc';
-import { UserService } from '../../src/services/user.service';
+import { DemoUserService } from '../services/user.service';
 
 // export const replaceReact = R => Object.assign(React, R);
 
 export default memo(
   ({ children, className, color, style }: { children: any; className?: string; color?: string; style?: React.CSSProperties }) => {
-    // const us = useInstance(UserService);
+    // const us = useInstance(DemoUserService);
     // const [us] = React.useState(null);
-    // console.log(us);
+    console.log(DemoUserService);
     return (
       <div className={classNames('panel', className)} style={style}>
         sdfdssdf

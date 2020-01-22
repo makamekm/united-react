@@ -14,15 +14,15 @@ function streamToString(stream): Promise<string> {
   });
 }
 
-export const compileComponent = async (componentPath: string) => {
+export const compileService = async (servicePath: string) => {
   const bundler = browserify({
-    entries: [`./demo/components/${componentPath}.tsx`],
+    entries: [`./demo/services/${servicePath}.tsx`],
     debug: process.env.NODE_ENV === 'production' ? false : true,
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     cache: {},
     packageCache: {},
     fullPaths: true,
-    standalone: componentPath
+    standalone: servicePath
   });
 
   bundler.transform(babelify, {
