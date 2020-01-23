@@ -12,6 +12,9 @@ export class CompilerService implements IRootService {
   @observable public loadingServices = true;
   private promiseLoadServices: Promise<void>;
   private services = [];
+  private componentCache: {
+    [path: string]: any;
+  } = {};
   private ServiceContainer;
 
   // get ServiceContainer() {
@@ -48,19 +51,28 @@ export class CompilerService implements IRootService {
     }
   }
 
-  public async renderElement(props: React.Props<any> = {}) {
+  async getComponent(path: string) {
+    if (this.componentCache[path]) {
+      return this.componentCache[path];
+    } else {
+      const Component = await UmdComponent(`/api/compile/component?path=${path}`, path);
+      this.componentCache[path] = Component;
+      return Component;
+    }
+  }
+
+  public async renderElement(path: string, width: number = 200, height: number = 200, props: React.Props<any> = {}) {
     const element = document.createElement('div');
 
     // Configuration
-    element.style.width = 100 + 'px';
-    element.style.height = 200 + 'px';
+    element.style.width = width + 'px';
+    element.style.height = height + 'px';
     await this.checkServicesBeingLoaded();
-    const Component = await UmdComponent('/api/compile/component?path=demo', 'demo');
-    const { ...finalProps } = props;
+    const Component = await this.getComponent(path);
 
     ReactDOM.render(
       <this.ServiceContainer>
-        <Component {...finalProps} />
+        <Component {...props} />
       </this.ServiceContainer>,
       element,
       async () => {

@@ -92,7 +92,7 @@ export const Paper = memo(() => {
   const compilerService = useInstance(CompilerService);
   React.useEffect(() => {
     initPaper(canvas.current);
-    compilerService.renderElement();
+    compilerService.renderElement('demo');
   }, []);
 
   const [zoomValue, setZoomValue] = React.useState('100');
@@ -128,6 +128,7 @@ export const Paper = memo(() => {
     showZoomIndicator();
     setZoomValue(getZoomValue());
   }, []);
+
   return (
     <>
       <canvas ref={canvas} className="paper" onWheel={onScroll}></canvas>
