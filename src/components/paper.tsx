@@ -1,14 +1,9 @@
 import React, { memo } from 'react';
-import ReactDOM from 'react-dom';
 
 import paper from 'paper';
 import { animated, useTransition } from 'react-spring';
-import html2canvas from 'html2canvas';
-import { View } from '../base/view';
-import { UmdComponent } from './umd-component';
-import { provider } from 'react-ioc';
-import { UserService } from '../services/user.service';
-import { UmdServices } from './umd-services';
+import { useInstance } from 'react-ioc';
+import { CompilerService } from '../services/compiler.service';
 
 function initPaper(canvas: HTMLCanvasElement) {
   canvas.setAttribute('resize', 'true');
@@ -79,109 +74,25 @@ const maxZoom = 32.0;
 const minZoom = 0.01;
 const zoomFactor = 1.04;
 
-const rootContainer = services =>
-  provider(...services)(({ children }: { children: any }) => {
-    return <div>{children}</div>;
-  });
+// let renderComponent: () => Promise<void>;
 
-async function renderElement(props: React.Props<any> = {}) {
-  const element = document.createElement('div');
+// type HotPromise<T> = [Promise<T>, (element: T) => void, (e: any) => void];
 
-  // Configuration
-  element.style.width = 100 + 'px';
-  element.style.height = 200 + 'px';
-  const services = await UmdServices('/api/compile/services');
-  const Component = await UmdComponent('/api/compile/component?path=demo', 'demo');
-  const RootContainer = rootContainer(services);
-  const { ...finalProps } = props;
-
-  ReactDOM.render(
-    <RootContainer>
-      <Component {...finalProps} />
-    </RootContainer>,
-    element,
-    async () => {
-      document.body.appendChild(element);
-      try {
-        const canvas = await html2canvas(element);
-        const raster = new paper.Raster(canvas.toDataURL());
-        raster.position = paper.view.center;
-        // console.log(canvas.clientWidth, canvas.clientHeight);
-        raster.scale(1 / window.devicePixelRatio);
-        // raster.shadowColor = new paper.Color(0, 0, 0, 0.5);
-        // raster.shadowBlur = 8;
-        // raster.shadowOffset = new paper.Point(0, 5);
-        // raster.scale(100 / canvas.width);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        document.body.removeChild(element);
-        ReactDOM.unmountComponentAtNode(element);
-      }
-    }
-  );
-}
-
-let renderComponent: () => Promise<void>;
-
-type HotPromise<T> = [Promise<T>, (element: T) => void, (e: any) => void];
-
-function createHotPromise<T = void>(): HotPromise<T> {
-  let resolve;
-  let reject;
-  const promise = new Promise<T>((r, e) => {
-    resolve = r;
-    reject = e;
-  });
-  return [promise, resolve, reject];
-}
-
-export const ComponentRenderer: React.FC = () => {
-  const ref = React.useRef();
-  const [data, setData] = React.useState();
-  const [promise, setPromise] = React.useState<HotPromise<HTMLElement>>(createHotPromise());
-  React.useEffect(() => {
-    renderComponent = async () => {
-      setData({
-        component: await UmdComponent('/api/test', 'demo'),
-        props: {}
-      });
-      const element = await promise[0];
-      try {
-        const canvas = await html2canvas(element);
-        const raster = new paper.Raster(canvas.toDataURL());
-        raster.position = paper.view.center;
-        raster.scale(1 / window.devicePixelRatio);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setData(null);
-      }
-    };
-  }, [promise]);
-  React.useEffect(() => {
-    if (data && ref.current) {
-      console.log(ref.current);
-      promise[1](ref.current);
-      setPromise(createHotPromise());
-    }
-  }, [data, ref]);
-  return (
-    <>
-      {data ? (
-        <div ref={ref} style={{ width: '200px', height: '200px' }}>
-          <data.component {...data.props}></data.component>
-        </div>
-      ) : null}
-    </>
-  );
-};
+// function createHotPromise<T = void>(): HotPromise<T> {
+//   let resolve;
+//   let reject;
+//   const promise = new Promise<T>((r, e) => {
+//     resolve = r;
+//     reject = e;
+//   });
+//   return [promise, resolve, reject];
+// }
 
 export const Paper = memo(() => {
+  const compilerService = useInstance(CompilerService);
   React.useEffect(() => {
     initPaper(canvas.current);
-    renderElement();
-    // renderComponent();
+    compilerService.renderElement();
   }, []);
 
   const [zoomValue, setZoomValue] = React.useState('100');
@@ -228,7 +139,6 @@ export const Paper = memo(() => {
             </animated.div>
           )
       )}
-      <ComponentRenderer />
       <style jsx>{`
         canvas.paper {
           width: 100%;
