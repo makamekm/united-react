@@ -10,8 +10,11 @@ export class DemoUserService {
   @observable private data: {
     user: IUser;
   } = {
-      user: null
-    };
+    user: {
+      id: -1,
+      email: 'tester'
+    }
+  };
 
   @computed get user() {
     return this.data.user;

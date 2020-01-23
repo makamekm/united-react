@@ -21,13 +21,13 @@ bundler.transform(babelify, {
   presets: ['@babel/env', '@babel/react', '@babel/typescript'],
   plugins: [
     'styled-jsx/babel',
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
     [
       '@babel/plugin-proposal-decorators',
       {
         legacy: true
       }
-    ]
+    ],
+    ['@babel/plugin-proposal-class-properties', { loose: true }]
   ]
 });
 
@@ -76,7 +76,7 @@ function copyFolderRecursiveSync(source, target) {
   //copy
   if (fs.lstatSync(source).isDirectory()) {
     files = fs.readdirSync(source);
-    files.forEach(function (file) {
+    files.forEach(function(file) {
       var curSource = path.join(source, file);
       if (fs.lstatSync(curSource).isDirectory()) {
         copyFolderRecursiveSync(curSource, path.join(target, file));

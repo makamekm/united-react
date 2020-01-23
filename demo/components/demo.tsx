@@ -7,9 +7,9 @@ import { DemoUserService } from '../services/demo-user.service';
 
 export default memo(
   ({ children, className, color, style }: { children: any; className?: string; color?: string; style?: React.CSSProperties }) => {
-    // const us = useInstance(DemoUserService);
+    const us = useInstance(DemoUserService);
     // const [us] = React.useState(null);
-    console.log(DemoUserService);
+    console.log(us.user);
     return (
       <div className={classNames('panel', className)} style={style}>
         sdfdssdf

@@ -16,40 +16,52 @@ function streamToString(stream): Promise<string> {
 }
 
 export const getComponentList = async () => {
-  return await new Promise((r, e) => glob(path.resolve('./demo/components') + '/**/*', {
-    nodir: true,
-  }, (er, files) => {
-    if (!er) {
-      r(files);
-    } else {
-      e(er);
-    }
-  }));
-}
+  return await new Promise((r, e) =>
+    glob(
+      path.resolve('./demo/components') + '/**/*',
+      {
+        nodir: true
+      },
+      (er, files) => {
+        if (!er) {
+          r(files);
+        } else {
+          e(er);
+        }
+      }
+    )
+  );
+};
 
 export const compileComponent = async (componentPath: string) => {
   const bundler = browserify({
-    entries: [`./demo/components/${componentPath}.tsx`],
+    entries: [path.resolve(`./demo/components/${componentPath}.tsx`)],
     debug: process.env.NODE_ENV === 'production' ? false : true,
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     cache: {},
     packageCache: {},
     fullPaths: true,
-    standalone: componentPath
+    standalone: componentPath,
+    basedir: '/',
+    paths: [path.resolve(`./demo/node_modules`), path.resolve(`./node_modules`)]
   });
 
   bundler.transform(babelify, {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    presets: ['@babel/env', '@babel/react', '@babel/typescript'],
+    presets: [
+      path.resolve(`./node_modules`, '@babel/preset-env'),
+      path.resolve(`./node_modules`, '@babel/preset-react'),
+      path.resolve(`./node_modules`, '@babel/preset-typescript')
+    ],
     plugins: [
-      'styled-jsx/babel',
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      path.resolve(`./node_modules`, 'styled-jsx/babel'),
       [
-        '@babel/plugin-proposal-decorators',
+        path.resolve(`./node_modules`, '@babel/plugin-proposal-decorators'),
         {
           legacy: true
         }
-      ]
+      ],
+      [path.resolve(`./node_modules`, '@babel/plugin-proposal-class-properties'), { loose: true }]
     ]
   });
 
