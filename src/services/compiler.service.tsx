@@ -54,7 +54,7 @@ export class CompilerService implements IRootService {
     // Configuration
     element.style.width = 100 + 'px';
     element.style.height = 200 + 'px';
-    this.checkServicesBeingLoaded();
+    await this.checkServicesBeingLoaded();
     const Component = await UmdComponent('/api/compile/component?path=demo', 'demo');
     const { ...finalProps } = props;
 
