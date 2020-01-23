@@ -58,4 +58,6 @@ export const compileComponent = async (componentPath: string) => {
   bundler.external(paths);
 
   return streamToString(bundler.bundle());
+  // const res = await streamToString(bundler.bundle());
+  // return res.replace(/\".*\/services\/.*\"/gim, `"${path.resolve('./demo')}/services/`);
 };
