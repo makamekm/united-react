@@ -8,5 +8,5 @@ export class AppStateService implements IRootService {
     views: []
   };
 
-  public useHook() {}
+  public useHook() { }
 }

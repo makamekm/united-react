@@ -17,11 +17,7 @@ export class CompilerService implements IRootService {
   } = {};
   private ServiceContainer;
 
-  // get ServiceContainer() {
-  //   return this.ServiceContainer;
-  // }
-
-  public useHook() {}
+  public useHook() { }
 
   rootContainer = services =>
     provider(...services)(({ children }: { children: any }) => {
@@ -61,12 +57,12 @@ export class CompilerService implements IRootService {
     }
   }
 
-  public async renderElement(path: string, width: number = 200, height: number = 200, props: React.Props<any> = {}) {
+  public async renderElement(path: string, width: number = 200, props: React.Props<any> = {}) {
     const element = document.createElement('div');
 
     // Configuration
-    element.style.width = width + 'px';
-    element.style.height = height + 'px';
+    // element.style.width = width + 'px';
+    // element.style.height = height + 'px';
     await this.checkServicesBeingLoaded();
     const Component = await this.getComponent(path);
 
